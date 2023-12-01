@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.5)
+project(Lab_02)
+set(SOURCES src/main.c src/students.c src/utils.c)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR})
+add_executable(Lab_02 ${SOURCES})
+target_include_directories(Lab_02 PUBLIC inc)
