@@ -10,7 +10,13 @@ int main()
     rc = read_table(students, &students_counter);
     if (rc != 0)
         return rc;
-    printf("Hello, World!\n");
-    print_table(students, students_counter);
-    return 0;
+
+    rc = add_student(students, &students_counter);
+    if (rc != 0)
+        return rc;
+    dbg_print_table(students, students_counter);
+    rc = searchprint_condition(students, students_counter);
+    if (rc != 0)
+        return rc;
+    return SUCCESS;
 }

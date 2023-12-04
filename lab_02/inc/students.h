@@ -2,7 +2,11 @@
 #define __STUDENTS_H__
 
 #include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
 #include "consts.h"
+//#include "utils.h"
+
 
 //to do : move to consts to separate .h file
 
@@ -74,4 +78,12 @@ typedef struct
     дата поступления;
 } student_t;
 */
+
+int read_line(char *tmp);
+int read_sex(sex_enum *tmp);
+int read_fields(student_t *student);
+int add_student(student_t students[ARRAY_LEN], size_t *students_counter);
+void collect_buffer_garbage();
+int searchprint_condition(student_t students[ARRAY_LEN], size_t counter);
+
 #endif
