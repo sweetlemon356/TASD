@@ -1,5 +1,5 @@
-#ifndef ___CONSTS_H___
-#define ___CONSTS_H___
+#ifndef CONSTS_H
+#define CONSTS_H
 
 #define MAX_STRING 20
 #define MAX_LINE 300
@@ -13,5 +13,4 @@
 #define EMPTY_STRING 5
 #define INCORRECT_ENUM 6
 #define INCORRECT_INPUT 7
-
 #endif

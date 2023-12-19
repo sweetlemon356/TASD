@@ -1,11 +1,17 @@
-#ifndef __STUDENTS_H__
-#define __STUDENTS_H__
+#ifndef STUDENTS_H
+#define STUDENTS_H
 
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <inttypes.h>
+#include <ctype.h>
 #include <string.h>
 #include "consts.h"
 #include "utils.h"
+#include <time.h>
+#include <sys/time.h>
+
 
 
 //to do : move to consts to separate .h file
@@ -79,9 +85,18 @@ typedef struct
 } student_t;
 */
 
+typedef struct
+{
+    int id;
+    char surname[MAX_STRING];
+} keys_t;
+
+
+int check_int(char *tmp);
+int read_command(char *tmp, int *command);
 int read_table(student_t students[ARRAY_LEN], size_t *students_counter);
-void print_table(student_t students[ARRAY_LEN], size_t students_counter);
-void dbg_print_table(student_t students[ARRAY_LEN], size_t students_counter);
+int print_table(student_t students[ARRAY_LEN], size_t students_counter);
+int dbg_print_table(student_t students[ARRAY_LEN], size_t students_counter);
 int read_line(char *tmp);
 int read_sex(sex_enum *tmp);
 int read_fields(student_t *student);
@@ -89,7 +104,17 @@ int add_student(student_t students[ARRAY_LEN], size_t *students_counter);
 void collect_buffer_garbage();
 int searchprint_condition(student_t students[ARRAY_LEN], size_t counter);
 void print_student(student_t student, size_t counter);
-int delete_student(student_t students[ARRAY_LEN], size_t *students_counter);
 int lshift_arr(int id, student_t arr[ARRAY_LEN], size_t students_counter);
+int delete_student(student_t students[ARRAY_LEN], size_t *students_counter);
+int table_bubble_sort(student_t students[ARRAY_LEN], size_t student_counter);
+int key_bubble_sort(student_t students[ARRAY_LEN], size_t student_counter);
+int table_insertion_sort(student_t students[ARRAY_LEN], size_t student_counter);
+int keys_insertion_sort(student_t students[ARRAY_LEN], size_t student_counter);
+unsigned long long cur_ms_gettimeofday();
+int measure_table_bubble_sort(student_t students[ARRAY_LEN], size_t student_counter);
+int measure_keys_bubble_sort(student_t students[ARRAY_LEN], size_t student_counter);
+int measure_table_insertion_sort(student_t students[ARRAY_LEN], size_t student_counter);
+int measure_keys_insertion_sort(student_t students[ARRAY_LEN], size_t student_counter);
+int print_efficiency_table();
 
 #endif
