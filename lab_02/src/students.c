@@ -81,33 +81,45 @@ int print_table(student_t students[ARRAY_LEN], size_t students_counter)
 {
     //         8          40                                     9         5       9         12          12             40
     puts("+---------+----------------------------------------+---------+-----+---------+------------+------------+----------------------------------------+\n"
-         "|    #    |       surname name                     | group   | sex |avg score| date of adm|  house type| Adress                                 |\n"
-         "+---------+----------------------------------------+---------+-----+---------+------------+------------+----------------------------------------+\n");
+         "|    #    |       Фамилия Имя                      | группа  | пол | оценка  | дата пост  |тип жилища  | Адресс                                 |\n"
+         "+---------+----------------------------------------+---------+-----+---------+------------+------------+----------------------------------------+");
     for (size_t i = 0; i < students_counter; i++)
     {
         char sex = (students[i].sex == male) ? 'm' : 'f';
-        char date[10];
+        char date[11];
         sprintf(date, "%d.%d.%d", students[i].admission_date.day, students[i].admission_date.month, students[i].admission_date.year);
-        char adress[40];
+
         char housing_string[12];
+        char adress[40];
         switch (students[i].housing_en)
         {
             case flat:
-                sprintf(housing_string, "flat");
+                sprintf(housing_string, "квартира");
+                sprintf(adress, "%s %d %d", students[i].house_info.flat_info.street, students[i].house_info.flat_info.house_num, students[i].house_info.flat_info.flat_num);
                 break;
             case dormitory:
-                sprintf(housing_string, "dormitory");
+                sprintf(housing_string, "общежите");
+                sprintf(adress, "№%d комната %d", students[i].house_info.dormitory_info.dorm_num, students[i].house_info.dormitory_info.room_num);
                 break;
             case rented:
-                sprintf(housing_string, "rented");
+                sprintf(housing_string, "съемное");
+                sprintf(adress, "%s %d %d", students[i].house_info.rented_info.street, students[i].house_info.rented_info.house_num, students[i].house_info.rented_info.flat_num);
                 break;
         }
-
-        sprintf(adress, "%s %d %d", students[i].house_info.flat_info.street, students[i].house_info.flat_info.house_num, students[i].house_info.flat_info.flat_num);
-        printf("|%-8zu|%-20s %-19s|%-9d|%-5d|%-9lf|%-12s|%-12s|%-40s|", i, students[i].surname, students[i].name,
-               students[i].group_num, sex, students[i].avg_exam_score, date, housing_string, adress);
+        
+        //          i      name     gr   sex   scr  date   ht   adr
+        printf("|%-9zu|%-20s %-19s|%-9d|%-5s|%-9lf|%-12s|%-12s|%-40s|\n",
+                i,
+                students[i].surname,
+                students[i].name,
+                students[i].group_num,
+                sex,
+                students[i].avg_exam_score,
+                date,
+                housing_string,
+                adress);
     }
-    puts("+---------+----------------------------------------+---------+-----+---------+----------+----------+----------------------------------------+\n");
+    puts("+---------+----------------------------------------+---------+-----+---------+------------+------------+----------------------------------------+");
     return SUCCESS;
 }
 
