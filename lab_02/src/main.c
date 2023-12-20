@@ -28,7 +28,7 @@ int main()
         printf("10: Вывести таблицы сравнения эффективности сортировок.\n");
         printf("0: Выход.\n");
         printf(">");
-        if (read_command(tmp, &command))
+        if (read_command(&command))
         {
             printf("Ошибка при вводе, попробуйте еще раз.\n");
         }

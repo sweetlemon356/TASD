@@ -85,41 +85,7 @@ int print_table(student_t students[ARRAY_LEN], size_t students_counter)
          "+---------+----------------------------------------+---------+-----+---------+------------+------------+----------------------------------------+");
     for (size_t i = 0; i < students_counter; i++)
     {
-        char sex = (students[i].sex == male) ? 'm' : 'f';
-        char date[MAX_LINE];
-        sprintf(date, "%d.%d.%d", students[i].admission_date.day, students[i].admission_date.month, students[i].admission_date.year);
-
-        char housing_string[MAX_STRING];
-        char adress[40];
-        switch (students[i].housing_en)
-        {
-            case flat:
-                sprintf(housing_string, "квартира");
-                sprintf(adress, "%s д%d кв%d", students[i].house_info.flat_info.street, students[i].house_info.flat_info.house_num, students[i].house_info.flat_info.flat_num);
-                break;
-            case dormitory:
-                sprintf(housing_string, "общежите");
-                sprintf(adress, "№%d к%d", students[i].house_info.dormitory_info.dorm_num, students[i].house_info.dormitory_info.room_num);
-                break;
-            case rented:
-                sprintf(housing_string, "съемное");
-                sprintf(adress, "%s д%d кв%d %dр.", students[i].house_info.rented_info.street, students[i].house_info.rented_info.house_num, students[i].house_info.rented_info.flat_num, students[i].house_info.rented_info.price);
-                break;
-        }
-
-
-
-        //          i      name     gr   sex   scr  date   ht   adr
-        printf("|%-9zu|%-20s %-19s|%-9d|%-5c|%-9lf|%-12s|%-12s|%-40s|\n",
-                i,
-                students[i].surname,
-                students[i].name,
-                students[i].group_num,
-                sex,
-                students[i].avg_exam_score,
-                date,
-                housing_string,
-                adress);
+        print_student(students[i], i + 1);
     }
     puts("+---------+----------------------------------------+---------+-----+---------+------------+------------+----------------------------------------+");
     return SUCCESS;
@@ -307,25 +273,25 @@ int add_student(student_t students[ARRAY_LEN], size_t *students_counter)
 void print_student(student_t student, size_t counter)
 {
     char sex = (student.sex == male) ? 'm' : 'f';
-    char date[MAX_LINE];
+    char date[MAX_STRING];
     sprintf(date, "%d.%d.%d", student.admission_date.day, student.admission_date.month, student.admission_date.year);
 
     char housing_string[MAX_STRING];
     char adress[40];
     switch (student.housing_en) {
         case flat:
-            sprintf(housing_string, "квартира");
+            sprintf(housing_string, "flat");
             sprintf(adress, "%s д%d кв%d", student.house_info.flat_info.street, student.house_info.flat_info.house_num,
                     student.house_info.flat_info.flat_num);
             break;
         case dormitory:
-            sprintf(housing_string, "общежите");
+            sprintf(housing_string, "dormitory");
             sprintf(adress, "№%d к%d", student.house_info.dormitory_info.dorm_num,
                     student.house_info.dormitory_info.room_num);
             break;
         case rented:
-            sprintf(housing_string, "съемное");
-            sprintf(adress, "%s д%d кв%d %dр.", student.house_info.rented_info.street,
+            sprintf(housing_string, "rented");
+            sprintf(adress, "%s д%d кв%d %dр  ", student.house_info.rented_info.street,
                     student.house_info.rented_info.house_num, student.house_info.rented_info.flat_num,
                     student.house_info.rented_info.price);
             break;
@@ -333,7 +299,7 @@ void print_student(student_t student, size_t counter)
 
 
     printf("|%-9zu|%-20s %-19s|%-9d|%-5c|%-9lf|%-12s|%-12s|%-40s|\n",
-           0,
+           counter,
            student.surname,
            student.name,
            student.group_num,
@@ -352,6 +318,7 @@ int searchprint_condition(student_t students[ARRAY_LEN], size_t students_counter
     size_t counter = 0;
     if (scanf("%d", &year) != 1)
         return INCORRECT_INPUT;
+    collect_buffer_garbage();
     puts("+---------+----------------------------------------+---------+-----+---------+------------+------------+----------------------------------------+\n"
          "|    #    |       Фамилия Имя                      | группа  | пол | оценка  | дата пост  |тип жилища  | Адресс                                 |\n"
          "+---------+----------------------------------------+---------+-----+---------+------------+------------+----------------------------------------+");
@@ -441,7 +408,7 @@ int key_bubble_sort(student_t students[ARRAY_LEN], size_t student_counter)
     printf("Таблица до сортировки:\n");
     print_table(students, student_counter);
     keys_t keys[ARRAY_LEN];
-    for (size_t i = 0; i < student_counter - 1; i++)
+    for (size_t i = 0; i < student_counter; i++)
     {
         keys[i].id = i;
         strncpy(keys[i].surname, students[i].surname, MAX_STRING);
@@ -459,8 +426,9 @@ int key_bubble_sort(student_t students[ARRAY_LEN], size_t student_counter)
          "|    #    |       Фамилия Имя                      | группа  | пол | оценка  | дата пост  |тип жилища  | Адресс                                 |\n"
          "+---------+----------------------------------------+---------+-----+---------+------------+------------+----------------------------------------+");
 
-    for (size_t i = 0; i < student_counter; i++)
+    for (size_t i = 0; i < student_counter; i++) {
         print_student(students[keys[i].id], i + 1);
+    }
     puts("+---------+----------------------------------------+---------+-----+---------+------------+------------+----------------------------------------+");
     return SUCCESS;
 }
@@ -536,6 +504,9 @@ int keys_insertion_sort(student_t students[ARRAY_LEN], size_t student_counter)
             else
                 low = mid + 1;
         }
+        for (int j = i; j > low; j--)
+            keys[j] = keys[j - 1];
+        keys[low] = key;
     }
     printf("Таблица после сортировки\n");
     puts("+---------+----------------------------------------+---------+-----+---------+------------+------------+----------------------------------------+\n"
@@ -759,16 +730,13 @@ int check_int(char *tmp)
 }
 
 
-int read_command(char *tmp, int *command)
+int read_command(int *command)
 {
-    if (read_line(tmp))
+    if (scanf("%d", command) != 1)
         return INCORRECT_INPUT;
-    if (check_int(tmp))
+    if (*command > 10 || *command < 0)
         return INCORRECT_INPUT;
-    if (sscanf(tmp, "%d", command) != 1)
-        return INCORRECT_INPUT;
-    if (*command < 0 || *command > 10)
-        return INCORRECT_INPUT;
+    collect_buffer_garbage();
     return 0;
 }
 
