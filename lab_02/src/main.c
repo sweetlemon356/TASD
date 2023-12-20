@@ -1,9 +1,13 @@
 #include <stdio.h>
 #include "students.h"
+#include <windows.h>
+
 
 
 int main()
 {
+    system("chcp 65001");
+    SetConsoleOutputCP(CP_UTF8);
     student_t students[ARRAY_LEN];
     size_t students_counter = 0;
     char tmp[MAX_STRING];
@@ -20,7 +24,7 @@ int main()
         printf("6: Отсортировать таблицу методом вставок бин. поиском(сортировка самой таблицы)\n");
         printf("7: Отсортировать таблицу методом вставок бин. поиском(сортировка с вспомогательной таблицей)\n");
         printf("8: Удалить элемент из таблицы.\n");
-        printf("9: Вывести список всех балетов для детей указанного возраста с продолжительностью меньше указанной.\n");
+        printf("9: Вывести список всех студентов живущих в общежитие, поступивших в указанный год\n");
         printf("10: Вывести таблицы сравнения эффективности сортировок.\n");
         printf("0: Выход.\n");
         printf(">");
@@ -37,6 +41,7 @@ int main()
                         printf("При работе возникла ошибка, проверьте вводимые данные и попробуйте снова.\n");
                     break;
                 case 2:
+                    print_student(students[0], students_counter);
                     if (print_table(students, students_counter))
                         printf("При работе возникла ошибка, проверьте вводимые данные и попробуйте снова.\n");
                     break;
