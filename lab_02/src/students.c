@@ -110,7 +110,7 @@ int dbg_print_table(student_t students[ARRAY_LEN], size_t students_counter)
 
 int read_line(char *tmp)
 {
-    char tmp_string[MAX_STRING];
+    char tmp_string[MAX_STRING + 1];
     if (fgets(tmp_string, MAX_STRING + 1, stdin) == NULL)
         return STRING_READING_ERROR;
     tmp_string[strcspn(tmp_string, "\n")] = '\0';
@@ -124,7 +124,7 @@ int read_line(char *tmp)
 
 int read_sex(sex_enum *tmp)
 {
-    char tmp_string[MAX_STRING];
+    char tmp_string[MAX_STRING + 1];
     if (fgets(tmp_string, MAX_STRING + 1, stdin) == NULL)
         return STRING_READING_ERROR;
     tmp_string[strcspn(tmp_string, "\n")] = '\0';
@@ -143,7 +143,7 @@ int read_sex(sex_enum *tmp)
 
 void collect_buffer_garbage()
 {
-    char tmp_string[MAX_STRING];
+    char tmp_string[MAX_STRING + 1];
     fgets(tmp_string, MAX_STRING + 1, stdin);
 }
 
@@ -342,7 +342,7 @@ int searchprint_condition(student_t students[ARRAY_LEN], size_t students_counter
 
     }
     if (counter == 0)
-        printf("ничего не найдено");
+        printf("ничего не найдено\n");
     printf("+---------+----------------------------------------+---------+-----+---------+----------+----------+----------------------------------------+\n");
 
     return SUCCESS;
@@ -359,20 +359,20 @@ int delete_student(student_t students[ARRAY_LEN], size_t *students_counter)
 {
     if (*students_counter == 0)
     {
-        printf("Table is empty.\n");
+        printf("Таблица пуста.\n");
         return SUCCESS;
     }
     print_table(students, *students_counter);
-    printf("Enter id of element you want to delete\n");
+    printf("Выберете элемент для удаленя\n");
     int id = -1;
     if (scanf("%d", &id) != 1)
         return INCORRECT_INPUT;
     collect_buffer_garbage();
-    if (id <= 0 && id > (int)*students_counter)
+    if (id <= 0 || id > (int)*students_counter)
         return INCORRECT_INPUT;
     lshift_arr(id - 1, students, *students_counter);
     --*students_counter;
-    printf("Deleted successfully\n");
+    printf("Успешно удалено\n");
     return SUCCESS;
 }
 
@@ -533,7 +533,7 @@ unsigned long long cur_ms_gettimeofday()
 {
     struct timeval timeval;
     gettimeofday(&timeval, NULL);
-    return (timeval.tv_sec * 1000000 + timeval.tv_usec * 1);
+    return (timeval.tv_sec * 1000000000 + timeval.tv_usec * 1000);
 }
 
 int measure_table_bubble_sort(student_t students[ARRAY_LEN], size_t student_counter)
@@ -623,7 +623,7 @@ int print_efficiency_table()
     t2 = 0;
     t3 = 0;
     t4 = 0;
-    printf("Таблица сравнения эффективности сортировок по времени(микросекунды):\n");
+    printf("Таблица сравнения эффективности сортировок по времени(наносекунды):\n");
     printf("┌───┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┐\n");
     printf("│ # │       buble_sort_table       │        buble_sort_keys       │    insertion_binary_table    │     insertion_binary_keys    │\n");
     for (size_t i = 10; i <= 50; i += 10)
@@ -674,7 +674,7 @@ int print_efficiency_table()
     }
 
     printf("таблица сравненя эффективностии в процентном соотношении:\n");
-    printf("┌───┬───────────────────────────────┬───────────────────────────────┬───────────────────────────────┐\n");
+    printf("┌───┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┐\n");
     printf("│ # │ Занимаемый %% массива ключей  │ %% роста скорости с ключами(п)│ %% роста скорости с ключами(в)│\n");
     for (size_t i = 10; i <= 50; i += 10)
     {

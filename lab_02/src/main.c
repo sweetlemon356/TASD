@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include "students.h"
-#include <windows.h>
+//#include <windows.h>
 
 
 
 int main()
 {
-    system("chcp 65001");
-    SetConsoleOutputCP(CP_UTF8);
+    //system("chcp 65001");
+    //SetConsoleOutputCP(CP_UTF8);
     student_t students[ARRAY_LEN];
     size_t students_counter = 0;
     char tmp[MAX_STRING];
