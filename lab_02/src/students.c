@@ -1,20 +1,25 @@
 #include "students.h"
 
 
-int read_table(student_t students[ARRAY_LEN], size_t *students_counter)
+int read_table(student_t students[ARRAY_LEN], size_t *students_counter, size_t end)
 {
     FILE *f;
     f = fopen("students_table.txt", "r");
     if (f == NULL)
     {
-        puts("FILE OPENING ERROR");
+        puts("Ошибка открытия файла\n");
+        fclose(f);
         return FILE_ERROR;
     }
 
     char arr[MAX_LINE];
     student_t tmp;
-    while (fgets(arr, MAX_LINE, f) != NULL)
+    *students_counter = 0;
+    if (end > 50)
+        return INCORRECT_INPUT;
+    for (size_t i = 0; i < end; i++)
     {
+        fgets(arr, MAX_LINE, f);
         //printf("%s\n", arr);
         if (arr[0] == '0') {
             if (sscanf(arr, "%d %s %s %d %d %d %lf %s %d %d %d %d %d",
@@ -74,11 +79,16 @@ int read_table(student_t students[ARRAY_LEN], size_t *students_counter)
         students[*students_counter] = tmp;
         ++*students_counter;
     }
+    fclose(f);
     return 0;
 }
 
 int print_table(student_t students[ARRAY_LEN], size_t students_counter)
 {
+    if (students_counter == 0) {
+        printf("Таблица пока пуста\n");
+        return (SUCCESS);
+    }
     //         8          40                                     9         5       9         12          12             40
     puts("+---------+----------------------------------------+---------+-----+---------+------------+------------+----------------------------------------+\n"
          "|    #    |       Фамилия Имя                      | группа  | пол | оценка  | дата пост  |тип жилища  | Адресс                                 |\n"
@@ -259,14 +269,14 @@ int add_student(student_t students[ARRAY_LEN], size_t *students_counter)
     int rc = 0;
     if (*students_counter > ARRAY_LEN)
     {
-        printf("The maximum number of students reached - %zu.\n", *students_counter);
+        printf("Достигнуто максимальное число записей - %zu.\n", *students_counter);
         return 0;
     }
     if ((rc = read_fields(&tmp)))
         return rc;
     students[*students_counter] = tmp;
     ++*students_counter;
-    printf("Student successfully added to the table. His number - %zu\n", *students_counter);
+    printf("Студент добавлен в таблицу, его номер - %zu\n", *students_counter);
     return 0;
 }
 
@@ -281,17 +291,17 @@ void print_student(student_t student, size_t counter)
     switch (student.housing_en) {
         case flat:
             sprintf(housing_string, "flat");
-            sprintf(adress, "%s д%d кв%d", student.house_info.flat_info.street, student.house_info.flat_info.house_num,
+            sprintf(adress, "%s %d %d", student.house_info.flat_info.street, student.house_info.flat_info.house_num,
                     student.house_info.flat_info.flat_num);
             break;
         case dormitory:
             sprintf(housing_string, "dormitory");
-            sprintf(adress, "№%d к%d", student.house_info.dormitory_info.dorm_num,
+            sprintf(adress, "%d %d", student.house_info.dormitory_info.dorm_num,
                     student.house_info.dormitory_info.room_num);
             break;
         case rented:
             sprintf(housing_string, "rented");
-            sprintf(adress, "%s д%d кв%d %dр  ", student.house_info.rented_info.street,
+            sprintf(adress, "%s %d %d %d", student.house_info.rented_info.street,
                     student.house_info.rented_info.house_num, student.house_info.rented_info.flat_num,
                     student.house_info.rented_info.price);
             break;
@@ -523,7 +533,7 @@ unsigned long long cur_ms_gettimeofday()
 {
     struct timeval timeval;
     gettimeofday(&timeval, NULL);
-    return (timeval.tv_sec * 1000000 + timeval.tv_usec);
+    return (timeval.tv_sec * 1000000 + timeval.tv_usec * 1);
 }
 
 int measure_table_bubble_sort(student_t students[ARRAY_LEN], size_t student_counter)
@@ -613,33 +623,35 @@ int print_efficiency_table()
     t2 = 0;
     t3 = 0;
     t4 = 0;
-    printf("Таблица сравнения эффектвностей.");
-    for (size_t i = 10; i <= 100; i += 10)
+    printf("Таблица сравнения эффективности сортировок по времени(микросекунды):\n");
+    printf("┌───┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┐\n");
+    printf("│ # │       buble_sort_table       │        buble_sort_keys       │    insertion_binary_table    │     insertion_binary_keys    │\n");
+    for (size_t i = 10; i <= 50; i += 10)
     {
         for (size_t j = 0; j < 100; j++)
         {
             unsigned long long tmp;
-            read_table(students, &students_counter);
+            read_table(students, &students_counter, i);
             tmp = cur_ms_gettimeofday();
             measure_table_bubble_sort(students, students_counter);
             tmp = cur_ms_gettimeofday() - tmp;
             t1 += tmp;
         }
         t1 /= 100;
-        for (size_t j = 0; j < 100; j++)
+        for (size_t j = 0; j < 10; j++)
         {
             unsigned long long tmp;
-            read_table(students, &students_counter);
+            read_table(students, &students_counter, i);
             tmp = cur_ms_gettimeofday();
             measure_keys_bubble_sort(students, students_counter);
             tmp = cur_ms_gettimeofday() - tmp;
             t2 += tmp;
         }
         t2 /= 100;
-        for (size_t j = 0; j < 100; j++)
+        for (size_t j = 0; j < 10; j++)
         {
             unsigned long long tmp;
-            read_table(students, &students_counter);
+            read_table(students, &students_counter, i);
             tmp = cur_ms_gettimeofday();
             measure_table_insertion_sort(students, students_counter);
             tmp = cur_ms_gettimeofday() - tmp;
@@ -649,7 +661,7 @@ int print_efficiency_table()
         for (size_t j = 0; j < 100; j++)
         {
             unsigned long long tmp;
-            read_table(students, &students_counter);
+            read_table(students, &students_counter, i);
             tmp = cur_ms_gettimeofday();
             measure_keys_insertion_sort(students, students_counter);
             tmp = cur_ms_gettimeofday() - tmp;
@@ -657,16 +669,19 @@ int print_efficiency_table()
         }
         t4 /= 100;
         printf("|%3zu|%30llu|%30llu|%30llu|%30llu|\n", i, t1, t2, t3, t4);
+        printf("└───┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┘\n");
+
     }
 
     printf("таблица сравненя эффективностии в процентном соотношении:\n");
+    printf("┌───┬───────────────────────────────┬───────────────────────────────┬───────────────────────────────┐\n");
     printf("│ # │ Занимаемый %% массива ключей  │ %% роста скорости с ключами(п)│ %% роста скорости с ключами(в)│\n");
-    for (size_t i = 10; i <= 100; i += 10)
+    for (size_t i = 10; i <= 50; i += 10)
     {
         for (size_t j = 0; j < 100; j++)
         {
             unsigned long long tmp;
-            read_table(students, &students_counter);
+            read_table(students, &students_counter, i);
             tmp = cur_ms_gettimeofday();
             measure_table_bubble_sort(students, students_counter);
             tmp = cur_ms_gettimeofday() - tmp;
@@ -676,7 +691,7 @@ int print_efficiency_table()
         for (size_t j = 0; j < 100; j++)
         {
             unsigned long long tmp;
-            read_table(students, &students_counter);
+            read_table(students, &students_counter, i);
             tmp = cur_ms_gettimeofday();
             measure_keys_bubble_sort(students, students_counter);
             tmp = cur_ms_gettimeofday() - tmp;
@@ -686,7 +701,7 @@ int print_efficiency_table()
         for (size_t j = 0; j < 100; j++)
         {
             unsigned long long tmp;
-            read_table(students, &students_counter);
+            read_table(students, &students_counter, i);
             tmp = cur_ms_gettimeofday();
             measure_table_insertion_sort(students, students_counter);
             tmp = cur_ms_gettimeofday() - tmp;
@@ -696,7 +711,7 @@ int print_efficiency_table()
         for (size_t j = 0; j < 100; j++)
         {
             unsigned long long tmp;
-            read_table(students, &students_counter);
+            read_table(students, &students_counter, i);
             tmp = cur_ms_gettimeofday();
             measure_keys_insertion_sort(students, students_counter);
             tmp = cur_ms_gettimeofday() - tmp;
@@ -705,8 +720,11 @@ int print_efficiency_table()
         t4 /= 100;
         printf("│%3zu│%30d│%30d│%30d│\n", i, (int)(i * sizeof(keys_t) / (i * sizeof(student_t) / 100.0)), (int)((t1*1.0)/t2 * 100), (int)((t3*1.0)/t4 * 100));
     }
+    printf("└───┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┘\n");
     printf("Таблица сравнения эффективности сортировок по памяти(байты):\n");
-    for (size_t i = 10; i <= 100; i+=10)
+    printf("┌───┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┐\n");
+    printf("│ # │       buble_sort_table       │        buble_sort_keys       │    insertion_binary_table    │     insertion_binary_keys    │\n");
+    for (size_t i = 10; i <= 50; i+=10)
     {
         t1 = i * sizeof(student_t);
         t2 = i * sizeof(student_t) + i * sizeof(keys_t);
@@ -714,6 +732,8 @@ int print_efficiency_table()
         t4 = i * sizeof(student_t) + i * sizeof(keys_t);
         printf("│%3zu│%30llu│%30llu│%30llu│%30llu│\n", i, t1, t2, t3, t4);
     }
+    printf("└───┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┘\n");
+
     return SUCCESS;
 }
 

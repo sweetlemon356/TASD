@@ -94,7 +94,7 @@ typedef struct
 
 int check_int(char *tmp);
 int read_command(int *command);
-int read_table(student_t students[ARRAY_LEN], size_t *students_counter);
+int read_table(student_t students[ARRAY_LEN], size_t *students_counter, size_t end);
 int print_table(student_t students[ARRAY_LEN], size_t students_counter);
 int dbg_print_table(student_t students[ARRAY_LEN], size_t students_counter);
 int read_line(char *tmp);

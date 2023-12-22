@@ -1,5 +1,50 @@
-0 Ламоногов Даниил  0   33  21  3.7     Пушкина             25  365         2018    12  12
-0 Сидоров   Иван    0   32  19  4.7     Колотушкина         26  342         2019    3   3
-1 Петров    Вася    0   76  24  3.3     35                  28              2017    5   5
-1 Заичкина  Лена    1   11  18  4.0     35                  27              2022    4   4
-2 Пономарев Вова    2   22  19  3.8     Popkina_st.         34  29  30000   2022    12  12
+1 Kostin Dmitriy 1 46 24 3.4 7 91 2021 11 30
+1 Kutuzov Andrey 1 18 22 3.1 5 73 2022 9 3
+1 Otlichnikov Anna 1 15 23 3.9 1 5 2018 2 11
+0 Afonin Maksim 1 38 25 4.5 Suvorova 42 395 2021 10 8
+2 Suvorov Maria 1 25 17 4.9 Pushkina 24 322 23751 2020 12 26
+0 Levin Maria 1 52 21 3.5 Suvorova 33 274 2018 12 21
+1 Stulov Anna 1 19 17 3.3 2 67 2024 3 17
+0 Suvorov Andrey 1 34 25 4.6 Suvorova 29 326 2022 10 29
+0 Tupolev Svetlana 1 41 20 4.7 Plohaya 25 265 2021 8 28
+2 Toshakov Svetlana 1 28 20 3.4 Plohaya 25 30 38397 2021 5 21
+1 Gitarov Elena 1 11 22 4.9 3 88 2015 1 19
+2 Kutuzov Maria 1 18 21 4.8 Pushkina 38 252 34301 2020 8 14
+1 Ivanov Andrey 1 27 19 4.9 1 17 2016 2 16
+0 Kutuzov Petr 1 55 20 4.7 Levaya 44 235 2015 8 2
+2 Toshakov Anna 1 38 17 3.2 Pravaya 47 258 32818 2021 7 3
+1 Pravin Vladimir 1 31 18 3.5 10 36 2016 7 10
+1 Otlichnikov Maria 1 49 18 3.5 10 42 2017 9 19
+0 Sidorov Dmitriy 1 21 24 3.1 Levaya 45 278 2020 6 16
+2 Gitarov Anna 1 39 21 4.5 Pravaya 38 366 39790 2023 9 23
+1 Zotnikov Pavel 1 32 23 3.3 4 60 2019 9 3
+0 Kranov Maksim 1 41 22 3.7 Marsova 18 196 2019 11 21
+1 Vezdehodov Andrey 1 39 17 4.9 7 23 2019 9 14
+1 Afonin Maria 1 48 17 4.8 9 75 2021 3 7
+1 Monahov Vladimir 1 16 21 3.9 8 41 2020 1 5
+2 Kutuzov Elena 1 21 18 4.2 Pravaya 56 330 39109 2022 6 5
+0 Pravdin Pavel 1 20 19 3.9 Horoshaya 58 362 2023 8 2
+2 Kostin Elena 1 14 21 3.1 Pushkina 58 180 33114 2023 9 9
+1 Margarinov Dmitriy 1 53 24 3.4 10 65 2017 4 14
+2 Margarinov Svetlana 1 51 23 3.2 Stolichnaya 33 210 39598 2020 5 17
+1 Monahov Petr 1 41 17 4.7 4 3 2018 10 23
+0 Zotnikov Vladimir 1 11 17 3.5 Centralnaya 54 216 2022 9 20
+0 Sidorov Maria 1 40 17 3.1 Plohaya 42 178 2016 10 3
+2 Otlichnikov Anna 1 43 24 3.6 Stolichnaya 38 272 24861 2015 8 2
+0 Tupolev Petr 1 53 25 4.9 Levaya 25 185 2021 12 31
+2 Stulov Pavel 1 35 18 3.8 Kolotushkina 42 135 26574 2023 4 1
+0 Stulov Svetlana 1 47 18 3.5 Horoshaya 35 263 2016 6 7
+2 Toshakov Petr 1 14 24 3.2 Plohaya 58 216 28238 2018 2 16
+1 Margarinov Andrey 1 31 21 3.8 8 88 2015 12 9
+1 Monahov Maria 1 18 17 3.7 4 13 2017 5 18
+1 Pravdin Andrey 1 25 22 3.6 4 72 2023 4 18
+1 Pravin Petr 1 38 23 3.9 7 87 2018 9 19
+2 Monahov Vladimir 1 39 17 4.9 Horoshaya 15 36 22448 2020 5 7
+0 Levin Pavel 1 51 25 4.5 Pushkina 23 318 2016 3 31
+0 Zotnikov Pavel 1 13 24 3.9 Pushkina 13 363 2017 3 24
+0 Ivanov Maksim 1 12 21 3.2 Plohaya 52 285 2015 2 2
+1 Stulov Svetlana 1 23 21 3.3 3 16 2023 6 13
+1 Marshev Pavel 1 43 18 3.8 10 48 2023 6 1
+1 Monahov Maksim 1 15 24 4.9 4 72 2015 10 6
+2 Sidorov Pavel 1 45 21 3.5 Pravaya 51 131 33961 2019 5 23
+0 Pravdin Andrey 1 20 22 4.7 Stolichnaya 55 121 2019 6 27

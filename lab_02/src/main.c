@@ -37,7 +37,7 @@ int main()
             switch (command)
             {
                 case 1:
-                    if (read_table(students, &students_counter))
+                    if (read_table(students, &students_counter, 50))
                         printf("При работе возникла ошибка, проверьте вводимые данные и попробуйте снова.\n");
                     break;
                 case 2:
@@ -46,8 +46,9 @@ int main()
                         printf("При работе возникла ошибка, проверьте вводимые данные и попробуйте снова.\n");
                     break;
                 case 3:
-                    if (add_student(students, &students_counter))
+                    if (add_student(students, &students_counter)){
                         printf("При работе возникла ошибка, проверьте вводимые данные и попробуйте снова.\n");
+                        collect_buffer_garbage();}
                     break;
                 case 4:
                     if (table_bubble_sort(students, students_counter))
